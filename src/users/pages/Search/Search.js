@@ -18,7 +18,7 @@ const Search = () => {
 
   const handleChange = ({ target: { value }}) => setSearch(value);
 
-  const handleSubmit = () =>  {
+  const handleSubmit = () => {
     getUserById(search)
       .then((result) => {
         const { data } = result;
@@ -45,6 +45,9 @@ const Search = () => {
             fullWidth
             variant="outlined"
             disabled={error}
+            InputProps={{
+              "data-testid": "field-search",
+            }}
           />
           <Box py={2}>
             <Button
@@ -61,12 +64,18 @@ const Search = () => {
             <Divider />
           </Box>
           {result && (
-            <Alert severity="success">
+            <Alert 
+              severity="success"
+              data-testid="success-message"
+            >
               {`O usuário encontrado foi: ${result}`}
             </Alert>
           )}
           {error && (
-            <Alert severity="error">
+            <Alert
+              severity="error"
+              data-testid="error-message"
+            >
               Erro ao buscar informações, tente novamente mais tarde.
             </Alert>
           )}
