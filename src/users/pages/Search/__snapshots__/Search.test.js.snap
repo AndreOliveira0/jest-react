@@ -19,7 +19,7 @@ exports[`component <Search /> given render: match snapshot 1`] = `
         >
           <div
             class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl"
-            data-testid="field-search"
+            data-testid="search-field"
           >
             <input
               aria-invalid="false"
@@ -49,6 +49,7 @@ exports[`component <Search /> given render: match snapshot 1`] = `
         >
           <button
             class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary"
+            data-testid="find-button"
             tabindex="0"
             type="submit"
           >

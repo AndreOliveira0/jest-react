@@ -44,9 +44,8 @@ const Search = () => {
             placeholder="Digite aqui o ID do usuário"
             fullWidth
             variant="outlined"
-            disabled={error}
             InputProps={{
-              "data-testid": "field-search",
+              "data-testid": "search-field",
             }}
           />
           <Box py={2}>
@@ -56,6 +55,7 @@ const Search = () => {
               color="primary"
               onClick={handleSubmit}
               disabled={error}
+              data-testid="find-button"
             >
               Pesquisar
             </Button>
@@ -64,7 +64,7 @@ const Search = () => {
             <Divider />
           </Box>
           {result && (
-            <Alert 
+            <Alert
               severity="success"
               data-testid="success-message"
             >
@@ -79,7 +79,7 @@ const Search = () => {
               Erro ao buscar informações, tente novamente mais tarde.
             </Alert>
           )}
-        </Box>    
+        </Box>
       </Container>
     </main>
   );

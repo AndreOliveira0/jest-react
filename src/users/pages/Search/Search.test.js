@@ -12,9 +12,9 @@ describe('component <Search />', () => {
   });
 
   test('given a completed search: should display the message with the result', async () => {
-    render(<Search />);    
-    const fieldSearch = screen.queryByTestId('field-search');
-    const buttonFind = screen.queryByText('Pesquisar');
+    render(<Search />);
+    const fieldSearch = screen.queryByTestId('search-field');
+    const buttonFind = screen.queryByTestId('find-button');
 
     userEvent.type(fieldSearch, '1');
     userEvent.click(buttonFind);
@@ -34,9 +34,9 @@ describe('component <Search />', () => {
     const error = new Error('Falha ao buscar');
     getUserById.mockRejectedValueOnce(error);
 
-    render(<Search />);    
-    const fieldSearch = screen.queryByTestId('field-search');
-    const buttonFind = screen.queryByText('Pesquisar');
+    render(<Search />);
+    const fieldSearch = screen.queryByTestId('search-field');
+    const buttonFind = screen.queryByTestId('find-button');
 
     userEvent.type(fieldSearch, '2');
     userEvent.click(buttonFind);
@@ -50,7 +50,6 @@ describe('component <Search />', () => {
       'Erro ao buscar informações, tente novamente mais tarde.',
     );
     expect(console.error).toHaveBeenCalledWith(error);
-    //expect(fieldSearch).toBeDisabled();
-    //expect(buttonFind).toBeDisabled();
+    expect(buttonFind).toBeDisabled();
   });
 });
