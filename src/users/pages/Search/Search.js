@@ -8,9 +8,9 @@ import {
   Button,
   Divider,
 } from '@material-ui/core';
-import { useUsersService } from './services';
+import { useUsersService } from '../../services';
 
-const Home = () => {
+const Search = () => {
   const [search, setSearch] = useState('');
   const [result, setResult] = useState(null);
   const [error, setError] = useState(false);
@@ -76,4 +76,4 @@ const Home = () => {
   );
 }
 
-export { Home };
+export { Search };
