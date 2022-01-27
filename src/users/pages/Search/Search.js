@@ -3,10 +3,9 @@ import { Alert } from '@material-ui/lab';
 import {
   Box,
   Container,
-  TextField,
+  Input,
   Typography,
   Button,
-  Divider,
 } from '@material-ui/core';
 import { useUsersService } from '../../services';
 
@@ -19,6 +18,7 @@ const Search = () => {
   const handleChange = ({ target: { value }}) => setSearch(value);
 
   const handleSubmit = () => {
+    setResult(null);
     getUserById(search)
       .then((result) => {
         const { data } = result;
@@ -38,13 +38,15 @@ const Search = () => {
           <Typography gutterBottom>
             Busca de usuário por ID:
           </Typography>
-          <TextField
+          <Input
             value={search}
             onChange={handleChange}
+            name="search"
             placeholder="Digite aqui o ID do usuário"
             fullWidth
             variant="outlined"
-            InputProps={{
+            disabled={error}
+            inputProps={{
               "data-testid": "search-field",
             }}
           />
@@ -54,14 +56,9 @@ const Search = () => {
               type="submit"
               color="primary"
               onClick={handleSubmit}
-              disabled={error}
-              data-testid="find-button"
             >
               Pesquisar
             </Button>
-          </Box>
-          <Box pb={2}>
-            <Divider />
           </Box>
           {result && (
             <Alert

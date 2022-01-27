@@ -3,18 +3,44 @@ import userEvent from '@testing-library/user-event';
 import { getUserById } from '../../services/useUsersService';
 import { Search } from '.';
 
+/*
+const mockGetUserById = jest.fn().mockResolvedValue({
+  data: {
+    name: "José",
+    username: "JO",
+    email: "jose@teste.com",
+  },
+});
+
+jest.mock('../../services/useUsersService', () => ({
+  useUsersService: () => ({
+    getUserById: mockGetUserById,
+  }),
+}));
+*/
+
 jest.mock('../../services/useUsersService');
 
 describe('component <Search />', () => {
+  const setup = () => {
+    const utils = render(<Search />);
+    const fieldSearch = screen.queryByTestId('search-field');
+    const buttonFind = screen.queryByText('Pesquisar');
+
+    return {
+      ...utils,
+      fieldSearch,
+      buttonFind,
+    }
+  };
+
   test('given render: match snapshot', () => {
-    const { container } = render(<Search />);
+    const { container } = setup();
     expect(container).toMatchSnapshot();
   });
 
   test('given a completed search: should display the message with the result', async () => {
-    render(<Search />);
-    const fieldSearch = screen.queryByTestId('search-field');
-    const buttonFind = screen.queryByTestId('find-button');
+    const { fieldSearch, buttonFind } = setup();
 
     userEvent.type(fieldSearch, '1');
     userEvent.click(buttonFind);
@@ -34,9 +60,7 @@ describe('component <Search />', () => {
     const error = new Error('Falha ao buscar');
     getUserById.mockRejectedValueOnce(error);
 
-    render(<Search />);
-    const fieldSearch = screen.queryByTestId('search-field');
-    const buttonFind = screen.queryByTestId('find-button');
+    const { fieldSearch, buttonFind } = setup();
 
     userEvent.type(fieldSearch, '2');
     userEvent.click(buttonFind);
@@ -45,11 +69,11 @@ describe('component <Search />', () => {
     expect(getUserById).toHaveBeenCalledWith('2');
 
     const errorMessage = screen.queryByTestId('error-message');
-    expect(errorMessage).toBeInTheDocument();
+    expect(errorMessage).toBeInTheDocument(); //toBeVisible();
     expect(errorMessage.textContent).toBe(
       'Erro ao buscar informações, tente novamente mais tarde.',
     );
     expect(console.error).toHaveBeenCalledWith(error);
-    expect(buttonFind).toBeDisabled();
+    expect(fieldSearch).toBeDisabled();
   });
 });
